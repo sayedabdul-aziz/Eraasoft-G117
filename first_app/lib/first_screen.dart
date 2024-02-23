@@ -16,7 +16,7 @@ class FirstScreen extends StatelessWidget {
           ),
           centerTitle: true,
           title: const Text(
-            'My App',
+            'My First App',
             style: TextStyle(color: Colors.white),
           ),
           actions: [
