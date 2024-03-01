@@ -8,26 +8,22 @@ class FirstScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.black,
           leading: const Icon(
             Icons.menu,
-            color: Colors.white,
+            color: Colors.deepOrange,
             size: 25,
           ),
           centerTitle: true,
           title: const Text(
             'My First App',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.deepOrange),
           ),
           actions: [
             IconButton(
-                color: Colors.white,
+                color: Colors.deepOrange,
                 onPressed: () {},
                 icon: const Icon(Icons.settings)),
-            IconButton(
-                color: Colors.white,
-                onPressed: () {},
-                icon: const Icon(Icons.search)),
           ],
         ),
         body: Center(
@@ -60,7 +56,7 @@ class FirstScreen extends StatelessWidget {
                 'Sayed Abdul-Aziz',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: Colors.deepOrange,
                   fontSize: 28,
                 ),
               ),
@@ -70,52 +66,118 @@ class FirstScreen extends StatelessWidget {
               const Text(
                 'Flutter Developer',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.white60,
                   fontSize: 20,
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.facebook_rounded,
-                        color: Colors.blue,
-                      )),
-                  const SizedBox(
-                    width: 10,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.facebook_rounded,
+                            color: Colors.blue,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.camera_alt_rounded,
+                            color: Colors.redAccent,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.snapchat_rounded,
+                            color: Colors.amber,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.telegram_rounded,
+                            color: Colors.lightBlue,
+                          )),
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.camera_alt_rounded,
-                        color: Colors.redAccent,
-                      )),
-                  const SizedBox(
-                    width: 10,
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '@sayedabdulaziz',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        '@sayedabdulaziz',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        '@sayedabdulaziz',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        '@sayedabdulaziz',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.snapchat_rounded,
-                        color: Colors.amber,
-                      )),
-                  const SizedBox(
-                    width: 10,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white,
+                          )),
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.telegram_rounded,
-                        color: Colors.lightBlue,
-                      )),
                 ],
               ),
-              
             ],
           ),
         ));
