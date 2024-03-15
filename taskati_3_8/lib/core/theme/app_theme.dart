@@ -6,6 +6,8 @@ final ThemeData appLightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.white,
     fontFamily: GoogleFonts.poppins().fontFamily,
     inputDecorationTheme: InputDecorationTheme(
+      // constraints: const BoxConstraints(maxHeight: 50, ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: AppColors.primary)),

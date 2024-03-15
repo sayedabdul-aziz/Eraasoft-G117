@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati_3_8/core/constants/assets_icons.dart';
 import 'package:taskati_3_8/core/functions/routing.dart';
+import 'package:taskati_3_8/core/services/local_storage.dart';
 import 'package:taskati_3_8/core/widgets/custom_button.dart';
 import 'package:taskati_3_8/core/widgets/custom_dialogs.dart';
 import 'package:taskati_3_8/features/home/presentation/view/home_view.dart';
@@ -23,7 +23,6 @@ class UploadView extends StatefulWidget {
 class _UploadViewState extends State<UploadView> {
   @override
   Widget build(BuildContext context) {
-    var box = Hive.box('user');
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -31,9 +30,9 @@ class _UploadViewState extends State<UploadView> {
               onPressed: () {
                 if (path != null && name.isNotEmpty) {
                   // cached your data
-                  box.put('name', name);
-                  box.put('image', path);
-                  box.put('isUpload', true);
+                  AppLocalStorage.cacheData('name', name);
+                  AppLocalStorage.cacheData('image', path);
+                  AppLocalStorage.cacheData('isUpload', true);
 
                   pushWithReplacment(context, const HomeView());
                 } else if (path != null && name.isEmpty) {
