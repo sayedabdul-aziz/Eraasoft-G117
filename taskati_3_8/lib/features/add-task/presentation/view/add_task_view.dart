@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:taskati_3_8/core/functions/routing.dart';
+import 'package:taskati_3_8/core/services/local_storage.dart';
 import 'package:taskati_3_8/core/utils/app_colors.dart';
 import 'package:taskati_3_8/core/utils/text_styles.dart';
 import 'package:taskati_3_8/core/widgets/custom_button.dart';
+import 'package:taskati_3_8/features/add-task/data/task_model.dart';
 import 'package:taskati_3_8/features/home/presentation/view/home_view.dart';
 
 class AddTaskView extends StatefulWidget {
@@ -19,6 +21,9 @@ class _AddTaskViewState extends State<AddTaskView> {
   String startTime = DateFormat("hh:mm a").format(DateTime.now());
   String endTime = DateFormat("hh:mm a")
       .format(DateTime.now().add(const Duration(minutes: 30)));
+
+  var titleController = TextEditingController();
+  var noteController = TextEditingController();
   int selectedColor = 0;
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,7 @@ class _AddTaskViewState extends State<AddTaskView> {
             ),
             const Gap(5),
             TextFormField(
+              controller: titleController,
               decoration: const InputDecoration(
                 hintText: 'Enter Task Title',
               ),
@@ -63,6 +69,7 @@ class _AddTaskViewState extends State<AddTaskView> {
             ),
             const Gap(5),
             TextFormField(
+              controller: noteController,
               maxLines: 4,
               decoration: const InputDecoration(
                 hintText: 'Enter Task Note',
@@ -209,6 +216,18 @@ class _AddTaskViewState extends State<AddTaskView> {
                 CustomButton(
                   text: '+ Add Task',
                   onPressed: () {
+                    String id = DateTime.now().toString();
+                    AppLocalStorage.cacheTask(
+                        id,
+                        TaskModel(
+                            id: id,
+                            title: titleController.text,
+                            note: noteController.text,
+                            date: date,
+                            startTime: startTime,
+                            endTime: endTime,
+                            color: selectedColor,
+                            isComplete: false));
                     pushWithReplacment(context, const HomeView());
                   },
                   width: 140,
