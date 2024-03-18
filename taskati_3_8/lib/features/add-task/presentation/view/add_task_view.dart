@@ -10,23 +10,34 @@ import 'package:taskati_3_8/features/add-task/data/task_model.dart';
 import 'package:taskati_3_8/features/home/presentation/view/home_view.dart';
 
 class AddTaskView extends StatefulWidget {
-  const AddTaskView({super.key});
-
+  const AddTaskView({super.key, this.model});
+  final TaskModel? model;
   @override
   State<AddTaskView> createState() => _AddTaskViewState();
 }
 
 class _AddTaskViewState extends State<AddTaskView> {
-  String date = DateFormat("dd/MM/yyyy").format(DateTime.now());
-  String startTime = DateFormat("hh:mm a").format(DateTime.now());
-  String endTime = DateFormat("hh:mm a")
+  var date = DateFormat("dd/MM/yyyy").format(DateTime.now());
+  String? startTime = DateFormat('hh:mm a').format(DateTime.now());
+  var endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 30)));
+  int color = 0;
 
   var titleController = TextEditingController();
   var noteController = TextEditingController();
-  int selectedColor = 0;
+
+  @override
+  void initState() {
+    titleController = TextEditingController(text: widget.model?.title);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+    startTime = widget.model != null
+        ? widget.model?.startTime
+        : DateFormat('hh:mm a').format(DateTime.now());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -41,7 +52,7 @@ class _AddTaskViewState extends State<AddTaskView> {
         centerTitle: true,
         title: Text(
           'Add Task',
-          style: getTitleStyle(color: AppColors.primary),
+          style: getTitleStyle(context, color: AppColors.primary),
         ),
       ),
       body: Padding(
@@ -49,48 +60,74 @@ class _AddTaskViewState extends State<AddTaskView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --------Title-------------------
             Text(
               'Title',
-              style: getTitleStyle(),
+              style: getTitleStyle(
+                context,
+              ),
             ),
             const Gap(5),
             TextFormField(
               controller: titleController,
-              decoration: const InputDecoration(
-                hintText: 'Enter Task Title',
-              ),
+              decoration: const InputDecoration(hintText: 'Enter Task Title'),
+              // inputFormatters: [
+              //   LengthLimitingTextInputFormatter(10),
+              // ],
             ),
             const Gap(10),
-            // --------Note-------------------
             Text(
               'Note',
-              style: getTitleStyle(),
+              style: getTitleStyle(
+                context,
+              ),
             ),
             const Gap(5),
             TextFormField(
               controller: noteController,
               maxLines: 4,
-              decoration: const InputDecoration(
-                hintText: 'Enter Task Note',
-              ),
+              decoration: const InputDecoration(hintText: 'Enter Task Note'),
             ),
             const Gap(10),
-            // --------Date-------------------
             Text(
               'Date',
-              style: getTitleStyle(),
+              style: getTitleStyle(
+                context,
+              ),
             ),
             const Gap(5),
             TextFormField(
               readOnly: true,
               onTap: () {
                 showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2025, 2, 15))
-                    .then((value) {
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(
+                      DateTime.now().add(const Duration(days: 365)).year),
+                  // builder: (context, child) {
+                  //   return Theme(
+                  //     data: ThemeData(
+                  //       // dialogBackgroundColor: AppColors.black,
+                  //       datePickerTheme: DatePickerThemeData(
+                  //           headerForegroundColor: theme.onSurface,
+                  //           yearForegroundColor:
+                  //               MaterialStatePropertyAll(theme.primary)),
+                  //       colorScheme: ColorScheme.fromSeed(
+                  //           primary: theme.primary, // header background color
+                  //           onPrimary: theme.primary, // header text color
+                  //           onSurface: theme.primary,
+                  //           seedColor: theme.background // body text color
+                  //           ),
+                  //       textButtonTheme: TextButtonThemeData(
+                  //         style: TextButton.styleFrom(
+                  //           foregroundColor: theme.primary, // button text color
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     child: child!,
+                  //   );
+                  // },
+                ).then((value) {
                   if (value != null) {
                     setState(() {
                       date = DateFormat("dd/MM/yyyy").format(value);
@@ -99,29 +136,28 @@ class _AddTaskViewState extends State<AddTaskView> {
                 });
               },
               decoration: InputDecoration(
+                  suffixIcon: const Icon(Icons.calendar_month_rounded),
                   hintText: date,
-                  hintStyle: getBodyStyle(),
-                  suffixIcon: Icon(
-                    Icons.calendar_month_rounded,
-                    color: AppColors.primary,
-                  )),
+                  hintStyle: getBodyStyle(context)),
             ),
-
-            // start and end time
             const Gap(10),
             Row(
               children: [
                 Expanded(
                   child: Text(
                     'Start Time',
-                    style: getTitleStyle(),
+                    style: getTitleStyle(
+                      context,
+                    ),
                   ),
                 ),
                 const Gap(10),
                 Expanded(
                   child: Text(
                     'End Time',
-                    style: getTitleStyle(),
+                    style: getTitleStyle(
+                      context,
+                    ),
                   ),
                 ),
               ],
@@ -129,15 +165,14 @@ class _AddTaskViewState extends State<AddTaskView> {
             const Gap(5),
             Row(
               children: [
-                // ----------- start time --------------
+                // start time -----------------------
                 Expanded(
                   child: TextFormField(
                     readOnly: true,
                     onTap: () {
                       showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      ).then((value) {
+                              context: context, initialTime: TimeOfDay.now())
+                          .then((value) {
                         if (value != null) {
                           setState(() {
                             startTime = value.format(context);
@@ -146,24 +181,19 @@ class _AddTaskViewState extends State<AddTaskView> {
                       });
                     },
                     decoration: InputDecoration(
+                        suffixIcon: const Icon(Icons.watch_later_outlined),
                         hintText: startTime,
-                        hintStyle: getBodyStyle(),
-                        suffixIcon: Icon(
-                          Icons.watch_later_outlined,
-                          color: AppColors.primary,
-                        )),
+                        hintStyle: getBodyStyle(context)),
                   ),
                 ),
                 const Gap(10),
-                // ----------- end time --------------
                 Expanded(
                   child: TextFormField(
                     readOnly: true,
                     onTap: () {
                       showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      ).then((value) {
+                              context: context, initialTime: TimeOfDay.now())
+                          .then((value) {
                         if (value != null) {
                           setState(() {
                             endTime = value.format(context);
@@ -172,18 +202,15 @@ class _AddTaskViewState extends State<AddTaskView> {
                       });
                     },
                     decoration: InputDecoration(
+                        suffixIcon: const Icon(Icons.watch_later_outlined),
                         hintText: endTime,
-                        hintStyle: getBodyStyle(),
-                        suffixIcon: Icon(
-                          Icons.watch_later_outlined,
-                          color: AppColors.primary,
-                        )),
+                        hintStyle: getBodyStyle(context)),
                   ),
                 ),
               ],
             ),
+            // Hero Animation
             const Gap(20),
-            // ----------- colors --------------
             Row(
               children: [
                 Row(
@@ -194,29 +221,31 @@ class _AddTaskViewState extends State<AddTaskView> {
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  selectedColor = index;
+                                  color = index;
                                 });
                               },
                               child: CircleAvatar(
-                                  backgroundColor: (index == 0)
-                                      ? AppColors.primary
-                                      : (index == 1)
-                                          ? AppColors.orange
-                                          : AppColors.red,
-                                  child: (index == selectedColor)
-                                      ? Icon(
-                                          Icons.check,
-                                          color: AppColors.white,
-                                        )
-                                      : const SizedBox()),
+                                backgroundColor: index == 0
+                                    ? AppColors.primary
+                                    : index == 1
+                                        ? AppColors.orange
+                                        : AppColors.red,
+                                child: index == color
+                                    ? Icon(
+                                        Icons.check,
+                                        color: AppColors.white,
+                                      )
+                                    : const SizedBox(),
+                              ),
                             ),
                           )),
                 ),
                 const Spacer(),
                 CustomButton(
-                  text: '+ Add Task',
+                  width: 150,
+                  text: 'Add Task',
                   onPressed: () {
-                    String id = DateTime.now().toString();
+                    String id = '${titleController.text}${DateTime.now()}';
                     AppLocalStorage.cacheTask(
                         id,
                         TaskModel(
@@ -224,14 +253,12 @@ class _AddTaskViewState extends State<AddTaskView> {
                             title: titleController.text,
                             note: noteController.text,
                             date: date,
-                            startTime: startTime,
+                            startTime: startTime!,
                             endTime: endTime,
-                            color: selectedColor,
+                            color: color,
                             isComplete: false));
                     pushWithReplacment(context, const HomeView());
                   },
-                  width: 140,
-                  height: 45,
                 )
               ],
             )

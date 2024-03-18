@@ -39,7 +39,7 @@ class _SplashViewState extends State<SplashView> {
             const Gap(15),
             Text(
               'Taskati',
-              style: getTitleStyle(fontSize: 22),
+              style: getTitleStyle(context, fontSize: 22),
             ),
             const Gap(15),
             Text(

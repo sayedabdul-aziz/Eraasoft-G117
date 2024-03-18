@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:taskati_3_8/core/services/local_storage.dart';
-import 'package:taskati_3_8/core/theme/app_theme.dart';
+import 'package:taskati_3_8/core/theme/theme.dart';
 import 'package:taskati_3_8/features/add-task/data/task_model.dart';
 import 'package:taskati_3_8/features/splash_view.dart';
 
@@ -27,12 +27,20 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: appLightTheme,
-      darkTheme: appDarkTheme,
-      themeMode: ThemeMode.light,
-      debugShowCheckedModeBanner: false,
-      home: const SplashView(),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('user').listenable(),
+      builder: (context, box, child) {
+        bool darkMode = box.get('darkMode', defaultValue: false);
+        return MaterialApp(
+          themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+          // LIGHT
+          theme: AppThemes.appLightTheme,
+          // DARK
+          darkTheme: AppThemes.appDarkTheme,
+          debugShowCheckedModeBanner: false,
+          home: const SplashView(),
+        );
+      },
     );
   }
 }

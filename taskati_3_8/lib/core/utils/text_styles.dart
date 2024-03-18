@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:taskati_3_8/core/utils/app_colors.dart';
 
-TextStyle getTitleStyle(
+TextStyle getTitleStyle(context,
     {double? fontSize, Color? color, FontWeight? fontWeight}) {
   return TextStyle(
-      color: color ?? AppColors.black,
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      fontSize: fontSize ?? 18,
       fontWeight: fontWeight ?? FontWeight.bold,
-      fontSize: fontSize ?? 18);
+      color: color ?? Theme.of(context).colorScheme.onSurface);
 }
 
-TextStyle getBodyStyle(
+TextStyle getBodyStyle(context,
     {double? fontSize, Color? color, FontWeight? fontWeight}) {
   return TextStyle(
-      color: color ?? AppColors.black,
-      fontWeight: fontWeight ?? FontWeight.w500,
-      fontSize: fontSize ?? 16);
+      fontSize: fontSize ?? 16,
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      fontWeight: fontWeight ?? FontWeight.normal,
+      color: color ?? Theme.of(context).colorScheme.onSurface);
 }
 
 TextStyle getSmallStyle(
     {double? fontSize, Color? color, FontWeight? fontWeight}) {
   return TextStyle(
-      color: color ?? AppColors.grey,
+      fontSize: fontSize ?? 14,
+      fontFamily: GoogleFonts.poppins().fontFamily,
       fontWeight: fontWeight ?? FontWeight.normal,
-      fontSize: fontSize ?? 14);
+      color: color ?? AppColors.grey);
 }
