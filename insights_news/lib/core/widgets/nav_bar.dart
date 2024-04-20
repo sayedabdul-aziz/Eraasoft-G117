@@ -7,7 +7,8 @@ import 'package:insights_news/features/views/search/search_view.dart';
 import 'package:insights_news/features/views/source/source_view.dart';
 
 class NavBarWidget extends StatefulWidget {
-  const NavBarWidget({super.key});
+  const NavBarWidget({super.key, this.page});
+  final int? page;
 
   @override
   State<NavBarWidget> createState() => _NavBarWidgetState();
@@ -17,10 +18,17 @@ class _NavBarWidgetState extends State<NavBarWidget> {
   int selectedIndex = 0;
   List<Widget> views = [
     const HomeView(),
-    const SearchView(),
+    SearchView(),
     const SourceView(),
     const ProfileView(),
   ];
+
+  @override
+  void initState() {
+    selectedIndex = widget.page ?? 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

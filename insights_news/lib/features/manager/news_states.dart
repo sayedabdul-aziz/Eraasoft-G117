@@ -15,6 +15,18 @@ class NewsByCategorySuccessState extends NewsStates {
 
 class NewsByCategoryErrorState extends NewsStates {}
 
+// for search
+
+class NewsBySearchLoadingState extends NewsStates {}
+
+class NewsBySearchSuccessState extends NewsStates {
+  final NewsModel model;
+
+  NewsBySearchSuccessState(this.model);
+}
+
+class NewsBySearchErrorState extends NewsStates {}
+
 // get news by source
 class NewsBySourceLoadingState extends NewsStates {}
 

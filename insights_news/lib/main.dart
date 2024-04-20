@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insights_news/core/services/local_storage.dart';
 import 'package:insights_news/core/utils/colors.dart';
+import 'package:insights_news/core/utils/text_styles.dart';
 import 'package:insights_news/features/manager/news_cubit.dart';
 import 'package:insights_news/features/splash_view.dart';
 
@@ -24,6 +25,9 @@ class MainApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             backgroundColor: AppColors.background,
             foregroundColor: AppColors.white,
+            centerTitle: true,
+            titleTextStyle:
+                getBodyStyle(fontSize: 20, color: AppColors.primary),
           ),
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
             backgroundColor: AppColors.background,
@@ -35,6 +39,7 @@ class MainApp extends StatelessWidget {
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             fillColor: AppColors.cardColor,
+            hintStyle: getSmallStyle(),
             filled: true,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),

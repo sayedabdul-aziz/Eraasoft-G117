@@ -16,10 +16,23 @@ class ApiServices {
       // https://newsapi.org/v2/top-headlines?country=eg&category=sports&apiKey=48b16be6252e45a1a3a491c5c6496d72
       var url = Uri.parse(
           '${ApiConstants.baseUrl + ApiConstants.topHeadlines}?country=us&category=$category&${ApiConstants.apiKey}');
-      var res = await http.get(url, headers: {
-        "Authorization":
-            "Bearer 42|NJkEMFLGinUOeORDNnbs6pGPTovNegFgwyDn4hCy8a489b15"
-      });
+      var res = await http.get(url);
+      if (res.statusCode == 200) {
+        NewsModel model = NewsModel.fromJson(json.decode(res.body));
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  static Future<NewsModel?> getNewsBySearch(String query) async {
+    try {
+      // https://newsapi.org/v2/top-headlines?country=eg&category=sports&apiKey=48b16be6252e45a1a3a491c5c6496d72
+      var url = Uri.parse(
+          '${ApiConstants.baseUrl + ApiConstants.topHeadlines}?q=$query&${ApiConstants.apiKey}');
+      var res = await http.get(url);
       if (res.statusCode == 200) {
         NewsModel model = NewsModel.fromJson(json.decode(res.body));
         return model;
